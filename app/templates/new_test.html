@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Flask-SocketIO Test</title>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            namespace = '/test'; // change to an empty string to use the global namespace
+            var input = $( "#exporting" );
+
+            // the socket.io documentation recommends sending an explicit package upon connection
+            // this is specially important when using the global namespace
+            var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+
+            // event handler for server sent data
+            // the data is displayed in the "Received" section of the page
+            socket.on('my response', function(msg) {
+                $('#restra').append('<br>' + $('<div/>').text(msg.data).html());
+                    input.val(input.val()+msg.data);
+            });
+
+                    });
+    </script>
+</head>
+<body>
+    <h1>squadrun - assignment</h1>
+
+     <form class="form-inline" role="form" method="POST" action = {{url_for('myloctest')}}>
+        <div class="form-group">
+                <label for="location">Enter City</label>
+                <input type="text" name = "location" value="{{location}}" class="form-control" id="location">
+        </div>
+        <div class="form-group">
+                <label for="area">Locality:</label>
+                <input type="text" name = "area" class="form-control" value="{{area}}" id="area">
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+</form>
+
+
+
+              <form class="form-inline" role="form" method="POST" action = "{{url_for('nis')}}">
+                        <button type="submit" class="btn btn-default">Export</button>
+                                <input type="hidden" value="{{data}}" name="data" id="exporting" readonly>
+
+                </form>
+    <br>
+    {{data}}
+    <div id="restra"></div>
+</body>
+</html>

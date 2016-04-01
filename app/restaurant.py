@@ -43,7 +43,7 @@ class Restaurant:
                 name = name.encode('utf-8',errors='ignore')
                 rating = rating.encode('utf-8',errors='ignore')
                 contact = contact.encode('utf-8',errors='ignore')
-                address = address.translate(None,'\t\n')
+                address = address.translate(None,"\t\n ' ")
                 restaurant_list.append({'name':name,
                                           'rating':rating,
                                             'address':address,
@@ -53,5 +53,4 @@ class Restaurant:
         except Exception as exception:
                 return 'Error caught',exception
         return restaurant_list
-
 
